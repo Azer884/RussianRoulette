@@ -37,6 +37,7 @@ public class ShootingSys : MonoBehaviour
 
                     reloading.reloaded = false;
                     reloading.animators[0].Play("Shooting");
+                    reloading.ammo.text = "0/6";
                 }
                 currentPos++ ;
                 currentPos  %= 6;

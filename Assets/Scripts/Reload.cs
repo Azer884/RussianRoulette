@@ -1,10 +1,16 @@
+using TMPro;
 using UnityEngine;
 
 public class Reload : MonoBehaviour
 {
-    public bool reloaded, canShoot;
-    public int bulletPos;
+    [HideInInspector]public bool reloaded, canShoot;
+    [HideInInspector]public int bulletPos;
     public Animator[] animators;
+    public TextMeshProUGUI ammo;
+    void Start()
+    {
+        ammo.text = "0/6";
+    }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.R) && !reloaded)
@@ -13,6 +19,7 @@ public class Reload : MonoBehaviour
             animators[1].Play("ReloadRevolverBullet");
             bulletPos = Random.Range(0, 6);
             reloaded = true;
+            ammo.text = "1/6";
         }
         if (animators[0].GetCurrentAnimatorStateInfo(0).IsName("ReloadRevolver"))
         {
