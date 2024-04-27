@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Unity.Netcode;
 
-public class PlayerMovementAdvanced : MonoBehaviour
+public class PlayerMovementAdvanced : NetworkBehaviour
 {
     [Header("Movement")]
     private float moveSpeed;
@@ -48,6 +49,10 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
     Rigidbody rb;
 
+    ShootingSys shootingSys;
+    [SerializeField]private GameObject objectToShowForOwner;
+    [SerializeField]private GameObject objectToHideForOwner;
+
     public MovementState state;
     public enum MovementState
     {
@@ -57,13 +62,35 @@ public class PlayerMovementAdvanced : MonoBehaviour
         air
     }
 
-    private void Start()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody>();
 
         readyToJump = true;
 
         startYScale = transform.localScale.y;
+
+        shootingSys = GetComponent<ShootingSys>();
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+
+
+        if(!IsOwner)
+        {
+            shootingSys.enabled = false;
+            enabled = false;
+            objectToShowForOwner.SetActive(true);
+            objectToHideForOwner.SetActive(false);
+        }
+        else
+        {
+            transform.position = new Vector3(0, 2, 1);
+            objectToShowForOwner.SetActive(false);
+            objectToHideForOwner.SetActive(true);
+        }
     }
 
     private void Update()
