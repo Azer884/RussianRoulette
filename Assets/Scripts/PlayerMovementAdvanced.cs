@@ -80,15 +80,13 @@ public class PlayerMovementAdvanced : NetworkBehaviour
 
         if(!IsOwner)
         {
-            shootingSys.enabled = false;
             enabled = false;
-            objectToShowForOwner.SetActive(true);
             objectToHideForOwner.SetActive(false);
+            ChangeLayerRecursively(objectToShowForOwner, 0);
         }
         else
         {
             transform.position = new Vector3(0, 2, 1);
-            objectToShowForOwner.SetActive(false);
             objectToHideForOwner.SetActive(true);
         }
     }
@@ -256,5 +254,17 @@ public class PlayerMovementAdvanced : NetworkBehaviour
     private Vector3 GetSlopeMoveDirection()
     {
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
+    }
+
+
+
+    void ChangeLayerRecursively(GameObject currentGameObject, int newLayer)
+    {
+        currentGameObject.layer = newLayer;
+
+        foreach (Transform child in currentGameObject.transform)
+        {
+            ChangeLayerRecursively(child.gameObject, newLayer);
+        }
     }
 }

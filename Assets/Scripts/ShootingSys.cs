@@ -19,7 +19,7 @@ public class ShootingSys : NetworkBehaviour
             ShootServerRpc();
         }
     }
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc]
     void ShootServerRpc()
     {
         if (reloading.reloaded && reloading.canShoot)
@@ -35,10 +35,10 @@ public class ShootingSys : NetworkBehaviour
                     Vector3 direction = cam.forward;
 
                     bulletRigidbody.rotation = Quaternion.LookRotation(direction);
-
                     bulletRigidbody.velocity = direction * bulletSpeed;
+                    
+                    Destroy(bullet, bulletLifetime);
                 }
-                Destroy(bullet, bulletLifetime);
 
                 reloading.reloaded = false;
                 reloading.animators[0].Play("Shooting");
