@@ -80,6 +80,7 @@ public class PlayerMovementAdvanced : NetworkBehaviour
 
         if(!IsOwner)
         {
+            shootingSys.enabled = false;
             enabled = false;
             objectToHideForOwner.SetActive(false);
             ChangeLayerRecursively(objectToShowForOwner, 0);

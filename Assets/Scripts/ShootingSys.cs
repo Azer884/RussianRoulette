@@ -24,9 +24,10 @@ public class ShootingSys : NetworkBehaviour
     {
         if (reloading.reloaded && reloading.canShoot)
         {
+            Debug.Log("aaaa");
             if (reloading.bulletPos == currentPos)
             {
-
+                Debug.Log("bbb");
                 bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
                 bullet.GetComponent<NetworkObject>().Spawn();
                 

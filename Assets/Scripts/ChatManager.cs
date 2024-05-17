@@ -32,15 +32,15 @@ public class ChatManager : MonoBehaviour
         SteamMatchmaking.OnLobbyMemberLeave -= LobbyMemberLeft;
     }
 
-    private void LobbyMemberLeft(Lobby lobby, Friend friend) => AddMessageToBox(friend.Name + "Left the lobby");
+    private void LobbyMemberLeft(Lobby lobby, Friend friend) => AddMessageToBox(friend.Name + " Left the lobby" + "\n");
 
-    private void LobbyMemberJoined(Lobby lobby, Friend friend) => AddMessageToBox(friend.Name + "Joined the lobby");
+    private void LobbyMemberJoined(Lobby lobby, Friend friend) => AddMessageToBox(friend.Name + " Joined the lobby" + "\n");
 
     private void LobbyEntered(Lobby lobby) => AddMessageToBox("You entered the lobby ");
 
     private void ChatSent(Lobby lobby, Friend friend, string msg)
     {
-        AddMessageToBox(friend.Name + ": " + msg);
+        AddMessageToBox(friend.Name + ": " + msg + "\n");
     }
 
     private void AddMessageToBox(string msg)

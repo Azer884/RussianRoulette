@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Reload : MonoBehaviour
 {
-    [HideInInspector]public bool reloaded, canShoot;
+    public bool reloaded, canShoot;
     [HideInInspector]public int bulletPos;
     public Animator[] animators;
     public TextMeshProUGUI ammo;
