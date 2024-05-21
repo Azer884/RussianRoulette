@@ -1000,11 +1000,11 @@ MonoBehaviour:
   jumpForce: 5
   jumpCooldown: 0.25
   airMultiplier: 0.4
-  crouchSpeed: 3.5
+  crouchSpeed: 1.8
   crouchYScale: 0.5
   jumpKey: 32
   sprintKey: 304
-  crouchKey: 0
+  crouchKey: 306
   playerHeight: 2
   whatIsGround:
     serializedVersion: 2
@@ -1014,6 +1014,7 @@ MonoBehaviour:
   objectToShowForOwner: {fileID: 1952083854139443922}
   objectToHideForOwner: {fileID: 2716350479420652096}
   state: 0
+  JumpAnim: {fileID: 5097174914453752338}
 --- !u!114 &4178761781816812386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1030,9 +1031,16 @@ MonoBehaviour:
   bulletSpawnPoint: {fileID: 3635071858762379525}
   bulletSpeed: 50
   bulletLifetime: 10
-  reloading: {fileID: 6234531031439862769}
   BulletContainer: {fileID: 3198815789314104899}
   cam: {fileID: 6450302344875663717}
+  reloaded: 0
+  canShoot: 0
+  bulletPos: 0
+  animators:
+  - {fileID: 5595449811427784677}
+  - {fileID: 3522411827852550030}
+  - {fileID: 2136860117367392857}
+  ammo: {fileID: 3957289769523324924}
 --- !u!114 &5448999602889338357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1666,7 +1674,6 @@ GameObject:
   - component: {fileID: 667055991574384186}
   - component: {fileID: 7562605549506675586}
   - component: {fileID: 5595449811427784677}
-  - component: {fileID: 6234531031439862769}
   - component: {fileID: 2013743901888716588}
   m_Layer: 6
   m_Name: Revolver
@@ -1767,26 +1774,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6234531031439862769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7040401238871647604}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4489f457141431c4fb1a7c3c84a234a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reloaded: 0
-  canShoot: 0
-  bulletPos: 0
-  animators:
-  - {fileID: 5595449811427784677}
-  - {fileID: 3522411827852550030}
-  - {fileID: 2136860117367392857}
-  ammo: {fileID: 3957289769523324924}
 --- !u!114 &2013743901888716588
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -61,6 +61,7 @@ public class PlayerMovementAdvanced : NetworkBehaviour
         crouching,
         air
     }
+    public Animator JumpAnim;
 
     private void Awake()
     {
@@ -101,6 +102,23 @@ public class PlayerMovementAdvanced : NetworkBehaviour
         SpeedControl();
         StateHandler();
 
+        if(state == MovementState.air)
+        {
+            JumpAnim.SetBool("IsGrounded" , false); 
+        }
+        else
+        {
+            JumpAnim.SetBool("IsGrounded" , true); 
+        }
+        if(state == MovementState.crouching)
+        {
+            JumpAnim.SetBool("IsCrouching" , true); 
+        }
+        else
+        {
+            JumpAnim.SetBool("IsCrouching" , false); 
+        }
+
         // handle drag
         if (grounded)
             rb.drag = groundDrag;
@@ -131,17 +149,31 @@ public class PlayerMovementAdvanced : NetworkBehaviour
         // start crouch
         if (Input.GetKeyDown(crouchKey))
         {
-            transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
+            readyToJump = false;
+            if (IsOwner)
+            {
+                objectToHideForOwner.transform.localPosition = Vector3.up * .15f;
+            }
+
+
+            GetComponentInChildren<CapsuleCollider>().height = 1f;
+            GetComponentInChildren<CapsuleCollider>().center = Vector3.up * -0.5f;
             rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
-            transform.GetChild(1).localScale = new Vector3(transform.GetChild(1).localScale.x, 2f, transform.GetChild(1).localScale.z);
             playerHeight /= 2;
         }
 
         // stop crouch
         if (Input.GetKeyUp(crouchKey))
         {
-            transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
-            transform.GetChild(1).localScale = Vector3.one;
+            readyToJump = true;
+            if (IsOwner)
+            {
+                objectToHideForOwner.transform.localPosition = Vector3.up * .537f;
+            }
+
+
+            GetComponentInChildren<CapsuleCollider>().height = 2f;
+            GetComponentInChildren<CapsuleCollider>().center = Vector3.zero;
             playerHeight *= 2;
         }
     }

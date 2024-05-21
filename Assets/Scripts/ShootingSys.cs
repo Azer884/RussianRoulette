@@ -1,3 +1,4 @@
+using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -9,51 +10,79 @@ public class ShootingSys : NetworkBehaviour
     public float bulletSpeed = 10f;
     public float bulletLifetime = 10f;
     private int currentPos = 0;
-    public Reload reloading;
     public Transform BulletContainer;
     public Transform cam;
+
+    public bool reloaded, canShoot;
+    public int bulletPos;
+    public Animator[] animators;
+    public TextMeshProUGUI ammo;
+
+    void Start()
+    {
+        ammo.text = "0/6";
+    }
+
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R) && !reloaded)
+        {
+            animators[0].Play("ReloadRevolver");
+            animators[1].Play("ReloadRevolverBullet");
+            bulletPos = Random.Range(0, 6);
+            reloaded = true;
+            ammo.text = "1/6";
+        }
+
+        if (animators[0].GetCurrentAnimatorStateInfo(0).IsName("ReloadRevolver"))
+        {
+            canShoot = false;
+        }
+        else
+        {
+            canShoot = true;
+        }
+
         if (Input.GetKeyDown(KeyCode.Mouse0) && IsOwner)
-        { 
+        {
             ShootServerRpc();
         }
     }
+
     [ServerRpc]
     void ShootServerRpc()
     {
-        if (reloading.reloaded && reloading.canShoot)
+        if (reloaded && canShoot)
         {
-            Debug.Log("aaaa");
-            if (reloading.bulletPos == currentPos)
+        
+            if (bulletPos == currentPos)
             {
-                Debug.Log("bbb");
                 bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
                 bullet.GetComponent<NetworkObject>().Spawn();
-                
+
                 if (bullet.TryGetComponent<Rigidbody>(out var bulletRigidbody))
                 {
                     Vector3 direction = cam.forward;
 
                     bulletRigidbody.rotation = Quaternion.LookRotation(direction);
                     bulletRigidbody.velocity = direction * bulletSpeed;
-                    
+
                     Destroy(bullet, bulletLifetime);
                 }
 
-                reloading.reloaded = false;
-                reloading.animators[0].Play("Shooting");
-                reloading.ammo.text = "0/6";
+                reloaded = false;
+                animators[0].Play("Shooting");
+                ammo.text = "0/6";
             }
-            currentPos++ ;
-            currentPos  %= 6;
+
+            currentPos++;
+            currentPos %= 6;
         }
 
-        if (!reloading.animators[0].GetCurrentAnimatorStateInfo(0).IsName("ReloadRevolver"))
+        if (!animators[0].GetCurrentAnimatorStateInfo(0).IsName("ReloadRevolver"))
         {
-            reloading.animators[0].Play("Triggering");
-            reloading.animators[2].Play("TriggeringArm");
+            animators[0].Play("Triggering");
+            animators[2].Play("TriggeringArm");
         }
-    
     }
 }
