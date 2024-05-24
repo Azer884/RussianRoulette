@@ -62,7 +62,6 @@ public class PlayerMovementAdvanced : NetworkBehaviour
         air
     }
     public Animator JumpAnim;
-    public Transform target;
 
     private void Awake()
     {
@@ -118,11 +117,6 @@ public class PlayerMovementAdvanced : NetworkBehaviour
         else
         {
             JumpAnim.SetBool("IsCrouching" , false); 
-        }
-
-        if (IsOwner)
-        {
-            target.localPosition = new Vector3(0f, 5f, objectToHideForOwner.transform.localRotation.x * 10);
         }
 
         // handle drag
