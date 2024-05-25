@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1404237918923549231}
   - component: {fileID: 3393987738371049322}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Trail
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -156,9 +156,9 @@ GameObject:
   - component: {fileID: 2766154677530771294}
   - component: {fileID: 3679829890652036324}
   - component: {fileID: 5091904099068722952}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Model
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -242,9 +242,9 @@ GameObject:
   - component: {fileID: 442921867005501018}
   - component: {fileID: 6962589517575113882}
   - component: {fileID: 2095613176976740978}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -327,7 +327,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 112b463a878bfc44381ae87b9feb3c33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpeed: 50
 --- !u!114 &6962589517575113882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -381,9 +380,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8117096899710680593}
   - component: {fileID: 6393424446015614588}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Collider
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

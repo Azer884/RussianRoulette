@@ -10,6 +10,6 @@ public class LobbySaver : MonoBehaviour
 
     private void Awake() {
         instance = this;
-        DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(gameObject);
     }
 }

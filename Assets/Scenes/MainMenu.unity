@@ -175,7 +175,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &64616940
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1132,6 +1132,8 @@ MonoBehaviour:
   lobbyID: {fileID: 709278782}
   MainMenu: {fileID: 13511658}
   InLobbyMenu: {fileID: 2065604278}
+  startButton: {fileID: 536140544}
+  waitForHost: {fileID: 64616939}
 --- !u!1 &709278780
 GameObject:
   m_ObjectHideFlags: 0

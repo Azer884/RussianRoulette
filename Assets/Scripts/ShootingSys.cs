@@ -45,44 +45,41 @@ public class ShootingSys : NetworkBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && IsOwner)
         {
-            ShootServerRpc();
+            if (reloaded && canShoot)
+            {
+                if (bulletPos == currentPos)
+                {
+                    ShootServerRpc();
+
+                    reloaded = false;
+                    animators[0].Play("Shooting");
+                    ammo.text = "0/6";
+                }
+                
+                currentPos++;
+                currentPos %= 6;
+            }
+
+            if (!animators[0].GetCurrentAnimatorStateInfo(0).IsName("ReloadRevolver"))
+            {
+                animators[0].Play("Triggering");
+                animators[2].Play("TriggeringArm");
+            }
         }
     }
 
     [ServerRpc]
     void ShootServerRpc()
     {
-        if (reloaded && canShoot)
+        bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
+        bullet.GetComponent<NetworkObject>().Spawn();
+
+        if (bullet.TryGetComponent<Rigidbody>(out var bulletRigidbody))
         {
-        
-            if (bulletPos == currentPos)
-            {
-                bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
-                bullet.GetComponent<NetworkObject>().Spawn();
+            Vector3 direction = cam.forward;
 
-                if (bullet.TryGetComponent<Rigidbody>(out var bulletRigidbody))
-                {
-                    Vector3 direction = cam.forward;
-
-                    bulletRigidbody.rotation = Quaternion.LookRotation(direction);
-                    bulletRigidbody.velocity = direction * bulletSpeed;
-
-                    Destroy(bullet, bulletLifetime);
-                }
-
-                reloaded = false;
-                animators[0].Play("Shooting");
-                ammo.text = "0/6";
-            }
-
-            currentPos++;
-            currentPos %= 6;
-        }
-
-        if (!animators[0].GetCurrentAnimatorStateInfo(0).IsName("ReloadRevolver"))
-        {
-            animators[0].Play("Triggering");
-            animators[2].Play("TriggeringArm");
+            bulletRigidbody.rotation = Quaternion.LookRotation(direction);
+            bulletRigidbody.velocity = direction * bulletSpeed;
         }
     }
 }

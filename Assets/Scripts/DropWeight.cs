@@ -22,7 +22,8 @@ public class DropWeight : MonoBehaviour
         {
             multiAimConstraint.weight = 0f;
         }
-        else{
+        else
+        {
             multiAimConstraint.weight = weight;
         }
     }

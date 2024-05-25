@@ -8,7 +8,7 @@ using System;
 public class PlayerSpawner : NetworkBehaviour
 {
     [SerializeField]private GameObject player;
-    private bool isStarted;
+    public bool isStarted;
 
     void Start() 
     {
