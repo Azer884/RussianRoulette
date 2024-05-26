@@ -8,7 +8,7 @@ public class CheckBulletCollision : MonoBehaviour
 
     private void OnCollisionEnter(Collision other) 
     {
-        if (other.transform.CompareTag("Bullet") && !other.transform.GetComponent<Rigidbody>().useGravity)
+        if (other.transform.CompareTag("Bullet"))
         {
             ragdollActivator.RagdollModeOn();
         }

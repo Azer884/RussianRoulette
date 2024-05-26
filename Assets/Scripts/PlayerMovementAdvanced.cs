@@ -291,7 +291,7 @@ public class PlayerMovementAdvanced : NetworkBehaviour
 
 
 
-    void ChangeLayerRecursively(GameObject currentGameObject, int newLayer)
+    public void ChangeLayerRecursively(GameObject currentGameObject, int newLayer)
     {
         currentGameObject.layer = newLayer;
 

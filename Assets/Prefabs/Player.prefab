@@ -767,7 +767,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Leave Game
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -794,10 +794,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
+  m_fontSize: 36.95
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -1162,7 +1162,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 319
+    m_Bits: 831
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1248,6 +1248,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 902825180140522581}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 90}
+--- !u!1 &3454572341899321033
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1372423109189019062}
+  m_Layer: 6
+  m_Name: BulletSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1372423109189019062
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3454572341899321033}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: -2.38, y: 0.455, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8983734282506694493}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 90}
 --- !u!1 &3535013340664958901
 GameObject:
@@ -1447,6 +1478,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 7796342620143095038, guid: dec87025e25e9544a8daca1efaa9b112, type: 3}
   bulletSpawnPoint: {fileID: 3635071858762379525}
+  bulletSpawnPoint2: {fileID: 1372423109189019062}
   bulletSpeed: 50
   bulletLifetime: 10
   BulletContainer: {fileID: 3198815789314104899}
@@ -1458,6 +1490,7 @@ MonoBehaviour:
   - {fileID: 5595449811427784677}
   - {fileID: 3522411827852550030}
   - {fileID: 2136860117367392857}
+  - {fileID: 5097174914453752338}
   ammo: {fileID: 3957289769523324924}
 --- !u!114 &5448999602889338357
 MonoBehaviour:
@@ -1516,6 +1549,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   theRig: {fileID: 1952083854139443922}
   animator: {fileID: 5097174914453752338}
+  camScrpt: {fileID: 5944973053540298246}
+  mvmnt: {fileID: 4729771334540328075}
+  hand: {fileID: 4888357435060768914}
 --- !u!1 &4496348821703880898
 GameObject:
   m_ObjectHideFlags: 0
@@ -2486,6 +2522,7 @@ Transform:
   - {fileID: 2364023652617148003}
   - {fileID: 2721478739671682784}
   - {fileID: 3201507562736741443}
+  - {fileID: 1372423109189019062}
   m_Father: {fileID: 6473088802883878950}
   m_LocalEulerAnglesHint: {x: -6.325, y: 180, z: 270}
 --- !u!33 &4525658618464545193
@@ -2855,6 +2892,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5392cff17636144fbc08f2d31ee6100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerSpawner: {fileID: 0}
 --- !u!1 &8511965775211371490
 GameObject:
   m_ObjectHideFlags: 0
@@ -5640,7 +5678,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -544349225127062066, guid: 829b46296f9bb4d41967aae6b911126e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -479245733270206525, guid: 829b46296f9bb4d41967aae6b911126e, type: 3}
       propertyPath: m_Layer
@@ -6441,7 +6479,7 @@ CharacterJoint:
   m_ConnectedBody: {fileID: 296159044045539690}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0, z: 0}
-  m_Axis: {x: 0, y: 0, z: -1}
+  m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: -0.21438877, y: 0.36427736, z: -0.004096508}
   serializedVersion: 2
@@ -6450,18 +6488,18 @@ CharacterJoint:
     spring: 0
     damper: 0
   m_LowTwistLimit:
-    limit: -70
+    limit: -31.499832
     bounciness: 0
     contactDistance: 0
   m_HighTwistLimit:
-    limit: 10
+    limit: 35.777054
     bounciness: 0
     contactDistance: 0
   m_SwingLimitSpring:
     spring: 0
     damper: 0
   m_Swing1Limit:
-    limit: 50
+    limit: 39.282455
     bounciness: 0
     contactDistance: 0
   m_Swing2Limit:
@@ -6871,18 +6909,18 @@ CharacterJoint:
     spring: 0
     damper: 0
   m_LowTwistLimit:
-    limit: -70
+    limit: -47.1494
     bounciness: 0
     contactDistance: 0
   m_HighTwistLimit:
-    limit: 10
+    limit: 14.878555
     bounciness: 0
     contactDistance: 0
   m_SwingLimitSpring:
     spring: 0
     damper: 0
   m_Swing1Limit:
-    limit: 50
+    limit: 17.29742
     bounciness: 0
     contactDistance: 0
   m_Swing2Limit:
@@ -6981,27 +7019,27 @@ CharacterJoint:
   m_ConnectedBody: {fileID: 7697183138650759273}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0, z: 0}
-  m_Axis: {x: -1, y: 0, z: 0}
+  m_Axis: {x: 0, y: 1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0.0000000121071935, y: 0.2610533, z: 0.000000095926225}
   serializedVersion: 2
-  m_SwingAxis: {x: 0, y: 0, z: -1}
+  m_SwingAxis: {x: 1, y: 0, z: -1}
   m_TwistLimitSpring:
     spring: 0
     damper: 0
   m_LowTwistLimit:
-    limit: -90
+    limit: -38.244804
     bounciness: 0
     contactDistance: 0
   m_HighTwistLimit:
-    limit: 0
+    limit: -38.244804
     bounciness: 0
     contactDistance: 0
   m_SwingLimitSpring:
     spring: 0
     damper: 0
   m_Swing1Limit:
-    limit: 0
+    limit: 49.5633
     bounciness: 0
     contactDistance: 0
   m_Swing2Limit:
@@ -7589,7 +7627,7 @@ CharacterJoint:
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 1.4551915e-11, y: 0.48026037, z: 0.030862197}
   serializedVersion: 2
-  m_SwingAxis: {x: 0, y: 0, z: 1}
+  m_SwingAxis: {x: 0, y: 0, z: -1}
   m_TwistLimitSpring:
     spring: 0
     damper: 0
@@ -7605,7 +7643,7 @@ CharacterJoint:
     spring: 0
     damper: 0
   m_Swing1Limit:
-    limit: 25
+    limit: 3
     bounciness: 0
     contactDistance: 0
   m_Swing2Limit:
@@ -7910,9 +7948,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.056265
-  m_Height: 0.16563892
+  m_Height: 0.14744152
   m_Direction: 1
-  m_Center: {x: -0.010609944, y: 0.08679787, z: 0.005654868}
+  m_Center: {x: -0.0106099425, y: 0.09589658, z: 0.0056548696}
 --- !u!54 &2607361665473038064
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7959,22 +7997,22 @@ CharacterJoint:
     spring: 0
     damper: 0
   m_LowTwistLimit:
-    limit: 29.922567
+    limit: 20.031357
     bounciness: 0
     contactDistance: 0
   m_HighTwistLimit:
-    limit: 125.75265
+    limit: 102.4835
     bounciness: 0
     contactDistance: 0
   m_SwingLimitSpring:
     spring: 0
     damper: 0
   m_Swing1Limit:
-    limit: 23.087654
+    limit: 6.9834595
     bounciness: 0
     contactDistance: 0
   m_Swing2Limit:
-    limit: 6.9331665
+    limit: 3
     bounciness: 0
     contactDistance: 0
   m_EnableProjection: 0

@@ -7,17 +7,33 @@ public class RagdollActivator : MonoBehaviour
 {
     public GameObject theRig;
     public Animator animator;
+    public FPSCam camScrpt;
+    public PlayerMovementAdvanced mvmnt;
+    public GameObject hand;
     private Rigidbody[] ragdollRigids;
+    private bool isDead;
     // Start is called before the first frame update
     void Start()
     {
         GetRagdollBits();
         RagdollModelOff();
     }
+    void Update() {
+        if (isDead)
+        {
+            camScrpt.transform.LookAt(ragdollRigids[5].transform);
+        }    
+    }
 
     public void RagdollModeOn()
     {
         animator.enabled = false;
+        camScrpt.enabled = false;
+        mvmnt.enabled = false;
+        hand.SetActive(false);
+        isDead = true;
+        mvmnt.ChangeLayerRecursively(theRig, 9);
+        
 
         foreach (Rigidbody rigid in ragdollRigids)
         {
@@ -36,6 +52,9 @@ public class RagdollActivator : MonoBehaviour
         }
 
         animator.enabled = true;
+        camScrpt.enabled = true;
+        mvmnt.enabled = true;
+        hand.SetActive(true);
         GetComponent<Rigidbody>().isKinematic = false;
     }
 

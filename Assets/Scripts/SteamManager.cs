@@ -22,7 +22,6 @@ public class SteamManager : MonoBehaviour
         SteamMatchmaking.OnLobbyCreated += LobbyCreated;
         SteamMatchmaking.OnLobbyEntered += LobbyEntered;
         SteamFriends.OnGameLobbyJoinRequested += LobbyJoinRequested;
-        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
     }
 
     private async void LobbyJoinRequested(Lobby lobby, SteamId id)
@@ -55,7 +54,6 @@ public class SteamManager : MonoBehaviour
         SteamMatchmaking.OnLobbyCreated -= LobbyCreated;
         SteamMatchmaking.OnLobbyEntered -= LobbyEntered;
         SteamFriends.OnGameLobbyJoinRequested -= LobbyJoinRequested;
-        NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnected;
     }
     public async void HostLobby()
     {
@@ -78,16 +76,6 @@ public class SteamManager : MonoBehaviour
             }
         }
     }
-
-    private void OnClientDisconnected(ulong clientId)
-    {
-        if (clientId == NetworkManager.Singleton.LocalClientId)
-        {
-            // Local client disconnected
-            SceneManager.LoadScene("MainMenu");
-        }
-    }
-    
 
     public void CopyID()
     {

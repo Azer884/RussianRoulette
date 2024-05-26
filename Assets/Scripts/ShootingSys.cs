@@ -53,6 +53,7 @@ public class ShootingSys : NetworkBehaviour
 
                     reloaded = false;
                     animators[0].Play("Shooting");
+                    animators[3].Play("Shooting3rdperson");
                     ammo.text = "0/6";
                 }
                 
@@ -71,6 +72,7 @@ public class ShootingSys : NetworkBehaviour
     [ServerRpc]
     void ShootServerRpc()
     {
+        
         bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
         bullet.GetComponent<NetworkObject>().Spawn();
 

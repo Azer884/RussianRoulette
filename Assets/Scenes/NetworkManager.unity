@@ -503,6 +503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 4325658242478859650, guid: f015a7880d0b70f48924f0b264d8c131, type: 3}
+  isStarted: 0
 --- !u!4 &1607979831
 Transform:
   m_ObjectHideFlags: 0
