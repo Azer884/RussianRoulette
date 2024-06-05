@@ -52,7 +52,6 @@ public class ShootingSys : NetworkBehaviour
 
                     reloaded = false;
                     animators[0].Play("Shooting");
-                    animators[3].Play("Shooting3rdperson");
                     ammo.text = "0/6";
                 }
                 

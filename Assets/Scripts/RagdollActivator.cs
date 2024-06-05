@@ -13,8 +13,6 @@ public class RagdollActivator : MonoBehaviour
     public GameObject hand;
     private Rigidbody[] ragdollRigids;
 
-    //private NetworkVariable<bool> isDead = new NetworkVariable<bool>(false);
-
     void Start()
     {
         GetRagdollBits();
@@ -82,33 +80,4 @@ public class RagdollActivator : MonoBehaviour
         ragdollRigids = theRig.GetComponentsInChildren<Rigidbody>();
     }
 
-    /*public void Die()
-    {
-        if (IsOwner)
-        {
-            isDead.Value = true;
-            UpdateRagdollStateOnServerRpc(true);
-        }
-    }
-
-    [ServerRpc]
-    private void UpdateRagdollStateOnServerRpc(bool deadState)
-    {
-        isDead.Value = deadState;
-        UpdateRagdollStateOnClientRpc(deadState);
-    }
-
-    [ClientRpc]
-    private void UpdateRagdollStateOnClientRpc(bool deadState)
-    {
-        isDead.Value = deadState;
-        if (deadState)
-        {
-            RagdollModeOn();
-        }
-        else
-        {
-            RagdollModelOff();
-        }
-    }*/
 }

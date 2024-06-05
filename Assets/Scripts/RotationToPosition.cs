@@ -6,11 +6,8 @@ using Unity.Netcode;
 public class RotationToPosition : NetworkBehaviour
 {
     public Transform cam;
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
+    public bool rotationToPosition = false;
+    public Vector3 offset;
     // Update is called once per frame
     void Update()
     {
@@ -23,11 +20,19 @@ public class RotationToPosition : NetworkBehaviour
 
     private void UpdateTargetPosition()
     {
-        transform.localPosition = new Vector3(
+        if (rotationToPosition)
+        {
+            transform.localPosition = new Vector3(
             transform.localPosition.x,
             transform.localPosition.y,
             cam.localRotation.x * 15
-        );
+            );
+        }
+        else
+        {
+            transform.SetPositionAndRotation(cam.position,cam.rotation);
+        }
+        
     }
 
 
