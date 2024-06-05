@@ -24,7 +24,7 @@ public class FPSCam : MonoBehaviour
         verticalRotation -= mouseY;
         verticalRotation = Mathf.Clamp(verticalRotation, -90f, 90f);
 
-        transform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
+        transform.parent.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
         player.Rotate(Vector3.up * mouseX);
 
         if (Input.GetKeyDown(KeyCode.Escape))

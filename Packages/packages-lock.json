@@ -7,7 +7,7 @@
       "dependencies": {
         "com.unity.netcode.gameobjects": "1.0.0-pre.4"
       },
-      "hash": "8eab2c9713f7cbb056200e7eba6d4b4b5a19fe7f"
+      "hash": "0eda04fc2146a4f907a61de6403315bce705279e"
     },
     "com.unity.animation.rigging": {
       "version": "1.2.1",

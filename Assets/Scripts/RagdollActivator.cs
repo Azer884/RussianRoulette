@@ -1,9 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.Netcode;
 
-public class RagdollActivator : NetworkBehaviour
+public class RagdollActivator : MonoBehaviour
 {
     public GameObject theRig;
     public Animator animator;
@@ -13,17 +13,33 @@ public class RagdollActivator : NetworkBehaviour
     public GameObject hand;
     private Rigidbody[] ragdollRigids;
 
-    private NetworkVariable<bool> isDead = new NetworkVariable<bool>(false);
+    //private NetworkVariable<bool> isDead = new NetworkVariable<bool>(false);
 
     void Start()
     {
         GetRagdollBits();
         RagdollModelOff();
     }
+    private void OnEnable() 
+    {
+        GetComponent<NetworkState>().isDead.OnValueChanged += StateChange;
+    }
+    private void OnDisable() 
+    {
+        GetComponent<NetworkState>().isDead.OnValueChanged -= StateChange;
+    }
+
+    private void StateChange(bool previousValue, bool newValue)
+    {
+        if (newValue)
+        {
+            RagdollModeOn();
+        }
+    }
 
     void Update()
     {
-        if (isDead.Value)
+        if (GetComponent<NetworkState>().isDead.Value)
         {
             camScrpt.transform.LookAt(ragdollRigids[5].transform);
         }
@@ -66,7 +82,7 @@ public class RagdollActivator : NetworkBehaviour
         ragdollRigids = theRig.GetComponentsInChildren<Rigidbody>();
     }
 
-    public void Die()
+    /*public void Die()
     {
         if (IsOwner)
         {
@@ -94,5 +110,5 @@ public class RagdollActivator : NetworkBehaviour
         {
             RagdollModelOff();
         }
-    }
+    }*/
 }
