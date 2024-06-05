@@ -10,7 +10,7 @@ public class CheckBulletCollision : MonoBehaviour
     {
         if (other.transform.CompareTag("Bullet"))
         {
-            ragdollActivator.RagdollModeOn();
+            ragdollActivator.Die();
         }
     }
 }

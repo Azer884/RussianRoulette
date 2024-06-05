@@ -1450,7 +1450,7 @@ MonoBehaviour:
   jumpCooldown: 0.25
   airMultiplier: 0.4
   crouchSpeed: 2
-  crouchYScale: 0.5
+  crouchYScale: 0
   jumpKey: 32
   sprintKey: 304
   crouchKey: 306
@@ -1478,10 +1478,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 7796342620143095038, guid: dec87025e25e9544a8daca1efaa9b112, type: 3}
   bulletSpawnPoint: {fileID: 3635071858762379525}
-  bulletSpawnPoint2: {fileID: 1372423109189019062}
   bulletSpeed: 50
   bulletLifetime: 10
-  BulletContainer: {fileID: 3198815789314104899}
   cam: {fileID: 6450302344875663717}
   reloaded: 0
   canShoot: 0
@@ -1551,6 +1549,7 @@ MonoBehaviour:
   animator: {fileID: 5097174914453752338}
   camScrpt: {fileID: 5944973053540298246}
   mvmnt: {fileID: 4729771334540328075}
+  shoot: {fileID: 4178761781816812386}
   hand: {fileID: 4888357435060768914}
 --- !u!1 &4496348821703880898
 GameObject:
@@ -5678,7 +5677,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -544349225127062066, guid: 829b46296f9bb4d41967aae6b911126e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -479245733270206525, guid: 829b46296f9bb4d41967aae6b911126e, type: 3}
       propertyPath: m_Layer

@@ -10,7 +10,6 @@ public class ShootingSys : NetworkBehaviour
     public float bulletSpeed = 10f;
     public float bulletLifetime = 10f;
     private int currentPos = 0;
-    public Transform BulletContainer;
     public Transform cam;
 
     public bool reloaded, canShoot;
