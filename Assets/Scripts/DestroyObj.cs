@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DestroyObj : MonoBehaviour
@@ -9,7 +7,10 @@ public class DestroyObj : MonoBehaviour
     {
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         GetComponent<Rigidbody>().useGravity = true;
-        
+    }
+
+    private void Awake() 
+    {
         Destroy(gameObject, 5f);
     }
 }

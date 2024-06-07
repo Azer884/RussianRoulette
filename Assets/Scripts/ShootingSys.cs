@@ -9,17 +9,18 @@ public class ShootingSys : NetworkBehaviour
     private GameObject bullet;
     public float bulletSpeed = 10f;
     public float bulletLifetime = 10f;
-    private int currentPos = 0;
     public Transform cam;
 
     public bool reloaded, canShoot;
     public int bulletPos;
     public Animator[] animators;
     public TextMeshProUGUI ammo;
+    public GameManager gameManager;
 
     void Start()
     {
         ammo.text = "0/6";
+        gameManager = FindAnyObjectByType<GameManager>();
     }
 
     void Update()
@@ -28,7 +29,8 @@ public class ShootingSys : NetworkBehaviour
         {
             animators[0].Play("ReloadRevolver");
             animators[1].Play("ReloadRevolverBullet");
-            bulletPos = Random.Range(0, 6);
+            gameManager.BulletPos.Value = Random.Range(0, 6);
+            gameManager.currentPos.Value = 0;
             reloaded = true;
             ammo.text = "1/6";
         }
@@ -46,7 +48,7 @@ public class ShootingSys : NetworkBehaviour
         {
             if (reloaded && canShoot)
             {
-                if (bulletPos == currentPos)
+                if (bulletPos == gameManager.currentPos.Value)
                 {
                     ShootServerRpc();
 
@@ -55,8 +57,8 @@ public class ShootingSys : NetworkBehaviour
                     ammo.text = "0/6";
                 }
                 
-                currentPos++;
-                currentPos %= 6;
+                gameManager.currentPos.Value++;
+                gameManager.currentPos.Value %= 6;
             }
 
             if (!animators[0].GetCurrentAnimatorStateInfo(0).IsName("ReloadRevolver"))

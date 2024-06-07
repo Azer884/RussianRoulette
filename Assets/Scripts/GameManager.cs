@@ -1,61 +1,44 @@
 using UnityEngine;
 using Unity.Netcode;
 using System.Collections.Generic;
+using System.Linq;
 
 public class GameManager : NetworkBehaviour
 {
     public NetworkVariable<int> BulletPos = new NetworkVariable<int>();
+    public NetworkVariable<int> currentPos = new NetworkVariable<int>(0);
     public NetworkVariable<int> currentPlayer = new NetworkVariable<int>();
-    [SerializeField] private List<ShootingSys> players = new List<ShootingSys>();
+    [SerializeField] private List<PlayerInfo> players = new();
+    private bool isFirstRound = true;
 
-    public override void OnNetworkSpawn()
+    private void Update() 
     {
-        base.OnNetworkSpawn();
-        BulletPos.Value = Random.Range(0, 6);    
-        currentPlayer.Value = 0;
+        if (IsServer)
+        UpdatePlayerInfoList();
 
-        
+        if (isFirstRound)
+        {
+            currentPlayer.Value = Random.Range(0, players.Count);
+
+            isFirstRound = false;
+        }
     }
 
-    /*private void Update() {
-        var playerObjects = GameObject.FindGameObjectsWithTag("Player");
-        Debug.Log("Number of player objects found: " + playerObjects.Length);
-
-        foreach (var playerObject in playerObjects)
-        {
-            var playerScript = playerObject.GetComponent<ShootingSys>();
-            if (playerScript != null)
-            {
-                players.Add(playerScript);
-                Debug.Log("Added player: " + playerObject.name);
-            }
-            else
-            {
-                Debug.LogWarning("No ShootingSys component found on: " + playerObject.name);
-            }
-        }
-
-        Debug.Log("Total players in list: " + players.Count);
-    }*/
     private void OnEnable()
     {
-        BulletPos.OnValueChanged += ChangeBulletPos;
+        currentPos.OnValueChanged += ChangeBulletPos;
         currentPlayer.OnValueChanged += SwitchPlayer;
     }
 
     private void OnDisable()
     {
-        BulletPos.OnValueChanged -= ChangeBulletPos;
+        currentPos.OnValueChanged -= ChangeBulletPos;
         currentPlayer.OnValueChanged -= SwitchPlayer;
     }
 
     private void ChangeBulletPos(int previousValue, int newValue)
     {
-        if (players.Count == 0)
-        {
-            Debug.LogWarning("No players available to switch.");
-            return;
-        }
+        if (players.Count == 0) return;
 
         currentPlayer.Value++;
         currentPlayer.Value %= players.Count;
@@ -63,24 +46,42 @@ public class GameManager : NetworkBehaviour
 
     private void SwitchPlayer(int previousValue, int newValue)
     {
-        if (players.Count == 0)
-        {
-            Debug.LogWarning("No players available to switch.");
-            return;
-        }
+        if (players.Count == 0 || newValue < 0 || newValue >= players.Count)  return;
 
-        if (newValue < 0 || newValue >= players.Count)
-        {
-            Debug.LogError("Invalid player index: " + newValue);
-            return;
-        }
-
-        players[newValue].enabled = true;
+        players[newValue].ShootingSystem.enabled = true;
         for (int i = 0; i < players.Count; i++)
         {
             if (newValue != i)
             {
-                players[i].enabled = false;
+                players[i].ShootingSystem.enabled = false;
+            }
+        }
+    }
+
+    private void UpdatePlayerInfoList()
+    {
+        players.Clear();
+
+        // Get all connected clients
+        var connectedClients = NetworkManager.Singleton.ConnectedClientsList;
+
+        foreach (var client in connectedClients)
+        {
+            // Find the player object associated with the client
+            if (NetworkManager.Singleton.ConnectedClients.TryGetValue(client.ClientId, out var networkClient))
+            {
+                GameObject playerObject = networkClient.PlayerObject.gameObject;
+
+                // Get the ShootingSys component from the player object
+                ShootingSys shootingSys = playerObject.GetComponent<ShootingSys>();
+
+                shootingSys.bulletPos = BulletPos.Value;
+
+                if (shootingSys != null)
+                {
+                    // Add the player ID and ShootingSys to the list
+                    players.Add(new PlayerInfo(client.ClientId, shootingSys));
+                }
             }
         }
     }
