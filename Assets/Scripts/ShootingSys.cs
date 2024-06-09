@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
@@ -11,7 +12,7 @@ public class ShootingSys : NetworkBehaviour
     public float bulletLifetime = 10f;
     public Transform cam;
 
-    public bool reloaded, canShoot;
+    public bool canShoot;
     public int bulletPos;
     public Animator[] animators;
     public TextMeshProUGUI ammo;
@@ -20,18 +21,21 @@ public class ShootingSys : NetworkBehaviour
     void Start()
     {
         ammo.text = "0/6";
-        gameManager = FindAnyObjectByType<GameManager>();
+        if (IsClient)
+        {
+            StartCoroutine(FindGameManager());
+        }
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R) && !reloaded)
+        if (Input.GetKeyDown(KeyCode.R) && !gameManager.netReloaded.Value)
         {
             animators[0].Play("ReloadRevolver");
             animators[1].Play("ReloadRevolverBullet");
-            gameManager.BulletPos.Value = Random.Range(0, 6);
-            gameManager.currentPos.Value = 0;
-            reloaded = true;
+            gameManager.bulletPosition = Random.Range(0, 6);
+            gameManager.currentPosition = 0;
+            gameManager.reloaded = true;
             ammo.text = "1/6";
         }
 
@@ -46,19 +50,19 @@ public class ShootingSys : NetworkBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && IsOwner)
         {
-            if (reloaded && canShoot)
+            if (gameManager.netReloaded.Value && canShoot)
             {
-                if (bulletPos == gameManager.currentPos.Value)
+                if (bulletPos == gameManager.currentPosition)
                 {
                     ShootServerRpc();
 
-                    reloaded = false;
+                    gameManager.reloaded = false;
                     animators[0].Play("Shooting");
                     ammo.text = "0/6";
                 }
                 
-                gameManager.currentPos.Value++;
-                gameManager.currentPos.Value %= 6;
+                gameManager.currentPosition++;
+                gameManager.currentPosition %= 6;
             }
 
             if (!animators[0].GetCurrentAnimatorStateInfo(0).IsName("ReloadRevolver"))
@@ -83,5 +87,15 @@ public class ShootingSys : NetworkBehaviour
             bulletRigidbody.rotation = Quaternion.LookRotation(direction);
             bulletRigidbody.velocity = direction * bulletSpeed;
         }
+    }
+
+    private IEnumerator FindGameManager()
+    {
+        while (GameManager.Instance == null)
+        {
+            yield return null;
+        }
+
+        gameManager = GameManager.Instance;
     }
 }

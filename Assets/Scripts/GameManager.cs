@@ -2,20 +2,46 @@ using UnityEngine;
 using Unity.Netcode;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 
 public class GameManager : NetworkBehaviour
 {
     public NetworkVariable<int> BulletPos = new NetworkVariable<int>();
     public NetworkVariable<int> currentPos = new NetworkVariable<int>(0);
+    public NetworkVariable<bool> netReloaded = new NetworkVariable<bool>(false);
+    [HideInInspector]
+    public int bulletPosition; 
+    [HideInInspector]
+    public int currentPosition;
+    [HideInInspector]
+    public bool reloaded;
     public NetworkVariable<int> currentPlayer = new NetworkVariable<int>();
-    [SerializeField] private List<PlayerInfo> players = new();
+    public List<PlayerInfo> players = new();
     private bool isFirstRound = true;
+    public static GameManager Instance;
+
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+        
+        if (IsServer)
+        {
+            Instance = this; 
+        }
+        else
+        {
+            enabled = false;
+        }
+    }
 
     private void Update() 
     {
-        if (IsServer)
-        UpdatePlayerInfoList();
 
+        BulletPos.Value = bulletPosition;
+        currentPos.Value = currentPosition;
+        netReloaded.Value = reloaded;
+
+        UpdatePlayerInfoList();
         if (isFirstRound)
         {
             currentPlayer.Value = Random.Range(0, players.Count);
